@@ -1,0 +1,85 @@
+
+module alu_tb;
+
+reg  [7:0] A, B;
+reg  [3:0] sel;
+wire [7:0] result;
+
+// UUT (Unit Under Test)
+  alu uut (A,B,sel,result);
+    
+initial begin
+  $dumpfile("dump.vcd");
+  $dumpvars(0,alu_tb); 
+
+
+    // ADD
+    A = 8'd20; B = 8'd10; sel = 4'b0000;
+    
+    // SUB
+    #10 sel = 4'b0001;
+
+    // AND
+    #10 sel = 4'b0010;
+
+    // OR
+    #10 sel = 4'b0011;
+
+    // XOR
+    #10 sel = 4'b0100;
+
+    // NOT A
+    #10 sel = 4'b0101;
+
+    // NAND
+    #10 sel = 4'b0110;
+
+    // NOR
+    #10 sel = 4'b0111;
+
+    // XNOR
+    #10 sel = 4'b1000;
+
+    // LEFT SHIFT
+    #10 sel = 4'b1001;
+
+    // RIGHT SHIFT
+    #10 sel = 4'b1010;
+
+    // ROTATE LEFT
+    #10
+    A = 8'b10110011;
+    sel = 4'b1011;
+
+    // ROTATE RIGHT
+    #10 sel = 4'b1100;
+
+    // INCREMENT
+    #10
+    A = 8'd25;
+    sel = 4'b1101;
+
+    // DECREMENT
+    #10 sel = 4'b1110;
+
+    // COMPARE (A > B)
+    #10
+    A = 8'd30;
+    B = 8'd20;
+    sel = 4'b1111;
+
+    // COMPARE (A < B)
+    #10
+    A = 8'd10;
+    B = 8'd20;
+    sel = 4'b1111;
+
+    #10 $finish;
+end
+
+initial begin
+    $monitor("Time=%0t A=%d B=%d sel=%b result=%d",
+              $time, A, B, sel, result);
+end
+
+endmodule
